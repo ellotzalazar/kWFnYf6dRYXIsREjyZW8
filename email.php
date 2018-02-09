@@ -1,4 +1,11 @@
 <?php
+$mail = new Email;
+$src = 'http://facebook.com';
+$email = 'ellotzero@gmail.com';
+$person = 'Mr. Robot';
+
+$mail->sendConfirmation($src,$email, $person);
+
 Class Email{
 
 	function sendConfirmation($src,$email, $person){
