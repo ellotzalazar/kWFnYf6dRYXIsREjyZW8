@@ -1,28 +1,40 @@
 <?php
+
+/* SAMPLE Email
 $mail = new Email;
 $src = 'http://facebook.com';
-$email = 'ellotzero@gmail.com';
+$email = "ellotzero@gmail.com";
 $person = 'Mr. Robot';
+$link = 'http://ellotzero.x10host.com/';
 
-$mail->sendConfirmation($src,$email, $person);
-
+$mail->sendConfirmation($src,$email, $person,$link);
+*/
 Class Email{
 
-	function sendConfirmation($src,$email, $person){
-		$link = 'http://ellotzero.x10host.com/';
-		$systemName = 'Sterling';
-		$mailTitle = 'Welcome to Sterling';
-		$mailContent = 'Hi '.$person.', </br> Welcome to Sterling, <br/> To continue using your account please click verify.';
+	function sendConfirmation($src,$email, $person,$link){
+		
+		$systemName = 'Sterling Digital';
+		$mailTitle = 'Sterling Digital';
+		$mailContent = 'Hi '.$person.', <br/> Welcome to Sterling Digital! <br/> To continue using your account please click verify.';
 		$actionContent = 'Verify';
-		$systemLogoLink = 'http://ellotzero.x10host.com/img/dr.png';
+		$systemLogoLink = $link.'img/dr.png';
 
 		$body = $this->emailBody($link,$systemName,$mailTitle,$mailContent,$systemLogoLink,$src, $actionContent);
 
 		$to = $email;
-		$subject = "Sterling Confirmation";
+		$subject = "Sterling Digital Confirmation";
 		$txt = $body;
-		$headers = "From: noreply@ellotzero.x10host.com" . "\r\n" .
-		"BCC: noreply@ellotzero.x10host.com";
+		$headers = "MIME-Version: 1.0" . "\r\n";
+		$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+		
+		$headers .= "From: <noreply@ellotzero.x10host.com>No Reply Sterling Digital";
+		//*
+		if(mail($to,$subject,$txt,$headers)){
+			echo 'sent';
+		} else {
+			echo 'error';
+		}
+		// */
 	}
 	function emailBody($link,$systemName,$mailTitle,$mailContent,$systemLogoLink,$src, $actionContent){
 		$body = '<!DOCTYPE html>
@@ -36,7 +48,7 @@ Class Email{
 							<table width="100%" cellspacing="0" cellpadding="0" border="0">
 								<tbody>
 								<tr>
-									<td align="center" style="padding:0" bgcolor="'."#ffffff".'">
+									<td align="center" style="padding:0" bgcolor="'."#c587c9".'">
 										<table style="max-width: 540px;" cellspacing="0" cellpadding="0" border="0">
 											<tbody>
 											<tr>
@@ -70,7 +82,7 @@ Class Email{
 											<table style="padding:0" width="100%" cellspacing="0" cellpadding="0" border="0">
 												<tbody>
 												<tr>
-													<td style="padding:0 15px 70px 0" bgcolor="'."#ffffff".'">&nbsp;</td>
+													<td style="padding:0 15px 70px 0" bgcolor="'."#c587c9".'">&nbsp;</td>
 												</tr>
 												</tbody>
 											</table>
@@ -105,7 +117,7 @@ Class Email{
 																							<table cellspacing="0" cellpadding="0" border="0" align="center">
 																								<tbody>
 																								<tr>
-																									<td width="198" bgcolor="'."#ffffff".'" align="center">
+																									<td width="198" bgcolor="'."#c587c9".'" align="center">
 																										<a href="'.$src.'" 
 																											style="
 																													font-size:11px;
@@ -113,7 +125,7 @@ Class Email{
 																													text-decoration:none;
 																													text-decoration:none;
 																													padding:12px 10px;
-																													border:1px solid '."#ffffff".';
+																													border:1px solid '."#c587c9".';
 																													display:inline-block;
 																													width:198px;
 																													letter-spacing:1px
@@ -136,7 +148,7 @@ Class Email{
 																				This is an automatically generated email, please do not reply.<br>
 																				<br>
 																				Warmest wishes<br>
-																				Dash Taxes team</td>
+																				Sterling Digital team</td>
 																		</tr>
 																		</tbody>
 																	</table>
@@ -153,7 +165,7 @@ Class Email{
 											<table style="padding:0" width="100%" cellspacing="0" cellpadding="0" border="0">
 												<tbody>
 												<tr>
-													<td style="padding:0 15px 70px 0" bgcolor="'."#ffffff".'">&nbsp;</td>
+													<td style="padding:0 15px 70px 0" bgcolor="'."#c587c9".'">&nbsp;</td>
 												</tr>
 												</tbody>
 											</table>
@@ -174,7 +186,7 @@ Class Email{
 														<tr>
 															<td align="center" style="color: #fff;padding: 0 0 20px 0;">
 																<span style="font-size:11px;">
-																	Dash Taxes 2017, All rights reserve. 
+																	Sterling Digital 2018, All rights reserve. 
 																</span>
 
 																<hr style="border:0px; border-top: 1px solid #fff;width: 50%;margin: 20px 0px 0px 0px">
@@ -195,7 +207,7 @@ Class Email{
 											</tr>
 											<tr>
 												<td style="font-size:11px;line-height:18px;font-family:Arial,sans-serif;color:#ffffff;padding:0 0 40px 0" align="center">
-													<a href="'.$link.'" style="color:#fff;">dashtaxes.com</a>
+													<a href="'.$link.'" style="color:#fff; display: none;">dashtaxes.com</a>
 												</td>
 											</tr>
 											</tbody>
