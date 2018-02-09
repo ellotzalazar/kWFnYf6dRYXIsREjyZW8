@@ -1,5 +1,5 @@
 <div>   
-   <footer class="footer">
+   <footer class="footer navbar-fixed-bottom">
       
         <p>Copyright © 2017 Sterling Digital. All Rights reserved</p>
 
