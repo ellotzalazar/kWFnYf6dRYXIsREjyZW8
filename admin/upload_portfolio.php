@@ -45,28 +45,32 @@
 
             if (isset($_POST['logo'])) {
                   
-                  $filename = $_FILES['myfile']['name'];
-                  $tmp_name = $_FILES['myfile']['tmp_name'];
-              
-                 $image_check = getimagesize($_FILES['myfile']['tmp_name']);
-                         if($image_check==false)
-                               {
-                                  echo 'Not a Valid Image';
-                                        }
-                          elseif ($image_check==true){
-                    $location = "portfolio/".basename( $_FILES['myfile']['name']); 
-                     mysql_query("insert into portfolio (image) values('$filename')")or die(mysql_error());
-                    if(move_uploaded_file($tmp_name, $location))
-                       {
-                      echo '<script> alert("Successfully Uploaded!"); </script>' ;  
-                    }else {
-                   
-                      echo '<script> alert("Something went wrong!"); </script>' ;  
+				$filename = $_FILES['myfile']['name'];
+				$tmp_name = $_FILES['myfile']['tmp_name'];
+				if($_FILES['myfile']['size'] > 0)
+				{
+					$image_check = getimagesize($_FILES['myfile']['tmp_name']);
+					if($image_check==false)
+					{
+						$location = "portfolio/video/".basename( $_FILES['myfile']['name']); 
+					  // echo 'Not a Valid Image';
+					  
+					}
+					elseif ($image_check==true){
+						$location = "portfolio/".basename( $_FILES['myfile']['name']); 
+						// mysql_query("insert into portfolio (image) values('$filename')")or die(mysql_error());
+					}
+						
+					if(move_uploaded_file($tmp_name, $location))
+					{
+						echo '<script> alert("Successfully Uploaded!"); </script>' ;  
+					}else {
+				   
+					  echo '<script> alert("Something went wrong!"); </script>' ;  
 
-                    }
-                   
+					}
                 }
-                }
+			}
              
                 
         ?>  

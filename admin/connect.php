@@ -1,4 +1,8 @@
  <?php
+ini_set('upload_max_filesize', '500M');
+ini_set('post_max_size', '500M');
+ini_set('max_input_time', 1000);
+ini_set('max_execution_time', 1000);
 
  $servername = "localhost";
  $username = "root";

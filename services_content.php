@@ -13,8 +13,7 @@
 									while($row=$user_query->fetch_assoc()){
 									$id=$row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
-                                    <td><?php echo $row['service_offer']; ?></td> 
-                       
+										<td><?php echo $row['service_offer']; ?></td> 
 									</tr>
 									<?php } ?>
                            

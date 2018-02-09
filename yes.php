@@ -133,6 +133,7 @@
 		
 		<h4>Details:</h4>
 		<div>Hours of service: <?php echo  $hours1; ?></div>
+		<div>Time of event: <?php echo  date('h:i a',strtotime($time1)); ?></div>
 		<div>Location of event: <?php echo  $location1; ?></div>
 		<div>Total price: <?php echo  $total; ?></div>
 
@@ -174,7 +175,7 @@
 									while($row=$user_query->fetch_assoc()){
 									$id=$row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
-                                    <td><?php echo $row['service_offer']; ?></td> 
+										<td><?php echo $row['service_offer']; ?></td> 
                                                       
 									<?php } ?>
                            
