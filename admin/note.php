@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
 	<div class="row">	
@@ -25,8 +26,8 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from note")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+                                  <?php $user_query=fetchData($con,"select * from note");
+									while($row= $user_query->fetch_array()){
 									$id=$row['note_id']; ?>
 									 <tr class="del<?php echo $id ?>">
                                

@@ -15,8 +15,8 @@
     		<div class="controls">
 			<select name="service" required>
 			<option></option>
-			<?php $query=mysql_query("select * from service")or die(mysql_error());
-				while($row=mysql_fetch_array($query)){
+			<?php $query=fetchData($con,"select * from service");
+				while($row=$query->fetch_array()){
 				?>
 			<option value="<?php echo $row['service_id']; ?>"><?php echo $row['service_offer'] ?></option>
 			<?php } ?>

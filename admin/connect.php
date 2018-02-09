@@ -14,5 +14,18 @@ ini_set('max_execution_time', 1000);
  if(!$con){
  	die('connection fail: ' .mysqli_connect_error());
  }
+ 
+ function doInsertFunction($conn,$query)
+ {
+	mysqli_query($conn,$query);
+	mysqli_close($conn);
+ }
+ 
+ function fetchData($conn,$query = '')
+ {
+	$result = mysqli_query($conn,$query);
+	
 
+	return $result;
+ }
  ?>

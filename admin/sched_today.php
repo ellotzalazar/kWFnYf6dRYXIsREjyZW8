@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
 	<div class="row">	
@@ -34,25 +35,30 @@
 								    
 									$new = date('d/m/Y');
 							
-									$con = mysqli_connect('localhost','root','','scheduler');
-									$user_query=mysqli_query($con,"select * from schedule where date ='$new' AND status='Pending'")or die(mysql_error());
-									while($row=mysqli_fetch_array($user_query)){
-									$id=$row['id'];
-									$member_id = $row['member_id'];
-									$service_id = $row['service_id'];
-									/* member query  */
-									$member_query = mysqli_query($con,"select * from members where member_id = ' $member_id'")or die(mysql_error());
-									$member_row = mysqli_fetch_array($member_query);
-									/* service query  */
-									$service_query = mysqli_query($con,"select * from service where service_id = '$service_id' ")or die(mysql_error());
-									$service_row = mysqli_fetch_array($service_query);
+									$user_query= fetchData($con,"SELECT 
+																	sch.*,CONCAT(mb.firstname,' ',mb.lastname) member_name,
+																	srv.service_offer
+																FROM 
+																	schedule sch
+																	LEFT JOIN members mb
+																		ON mb.member_id = sch.member_id
+																	LEFT JOIN service srv
+																		ON srv.service_id = sch.service_id
+																where 
+																		sch.date = '$new' 
+																	AND 
+																		sch.status='Pending'
+																		
+																");
+									while($row= $user_query->fetch_array()){
+										$id=$row['id'];
 									?>
 									
 									 <tr class="del<?php echo $id ?>">
 									 <td><?php  echo $row['Number'];  ?></td>
-                                    <td><?php echo $member_row['firstname']." ".$member_row['lastname']; ?></td> 
+                                    <td><?php echo $row['member_name']; ?></td> 
                                     <td><?php  echo $row['date'];  ?></td> 
-                                    <td><?php  echo $service_row['service_offer'];  ?></td>
+                                    <td><?php  echo $row['service_offer'];  ?></td>
                                     <td><?php  echo $row['total_price'];  ?></td> 
                                     <td><?php  echo $row['status'];  ?></td> 
                                     <td width="100">

@@ -1,40 +1,41 @@
+	
 	<div id="edit<?php echo $id; ?>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-body">
 			<div class="alert alert-info"><strong>Edit Package</strong></div>
 	<form class="form-horizontal" method="post">
 
 			<div class="control-group">
-   			<label class="control-label" for="inputEmail">Service</label>
-    		<div class="controls">
-			<select name="service" required>
-			<option></option>
-			<?php $query=mysql_query("select * from service")or die(mysql_error());
-				while($row=mysql_fetch_array($query)){
-				?>
-			<option value="<?php echo $row['service_id']; ?>"><?php echo $row['service_offer'] ?></option>
-			<?php } ?>
+				<label class="control-label" for="inputEmail">Service</label>
+				<div class="controls">
+					<select name="service" required>
+					<option></option>
+					<?php $query=fetchData($con,"select * from service");
+						while($row=$query->fetch_array()){
+					?>
+						<option value="<?php echo $row['service_id']; ?>"><?php echo $row['service_offer'] ?></option>
+					<?php } ?>
 
-			</select>
-			</div>
+					</select>
+				</div>
 			</div>
 			
 			<div class="control-group">
-			<label class="control-label" for="inputEmail">Package Name</label>
-			<div class="controls">
-			<select name="package" required>
-			<option>Package A</option>
-			<option>Package B</option>
-			<option>Package C</option>
-			<option>Package D</option>
-			<option>Special Offer</option>
-			</select>
-			</div>
+				<label class="control-label" for="inputEmail">Package Name</label>
+				<div class="controls">
+					<select name="package" required>
+						<option>Package A</option>
+						<option>Package B</option>
+						<option>Package C</option>
+						<option>Package D</option>
+						<option>Special Offer</option>
+					</select>
+				</div>
 			</div>
 
 				<?php 
-	$package_query = mysql_query("select * from package where package_id='$id'")or die(mysql_error());
-	$package_row= mysql_fetch_array($package_query);
-	?>
+				$package_query = fetchData($con,"select * from package where package_id='$id'");
+				$package_row= $package_query->fetch_array();
+				?>
 
 
 			<div class="control-group">
@@ -51,26 +52,18 @@
 			
 			</div>
 			</div>
-			<?php  ?>
 
-			<?php 
-	$package_query = mysql_query("select * from package where package_id='$id'")or die(mysql_error());
-	$package_row= mysql_fetch_array($package_query);
-	?>
-			
+		
 			<div class="control-group">
 
-			<label class="control-label" for="inputEmail">Price</label>
-			<div class="controls">
-			
-			<input type="text" value="<?php echo $package_row['price']; ?>" name="price" id="inputEmail"  required>
+				<label class="control-label" for="inputEmail">Price</label>
+				<div class="controls">
+					<input type="text" value="<?php echo $package_row['price']; ?>" name="price" id="inputEmail"  required>
+
+				</div>
+
 
 			</div>
-
-
-			</div>
-<?php  ?>
-
 
 			<div class="control-group">
 				<div class="controls">

@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
     <div class="row">   
@@ -31,8 +32,8 @@
                                 </thead>
                                 <tbody>
                                  
-                                  <?php $user_query=mysql_query("select * from members")or die(mysql_error());
-                                    while($row=mysql_fetch_array($user_query)){
+                                  <?php $user_query=fetchData($con,"select * from members")or die(mysql_error());
+                                    while($row=$user_query->fetch_assoc()){
                                     $id=$row['member_id']; ?>
                                      <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['firstname']." ".$row['middlename']." ".$row['lastname']; ?></td> 

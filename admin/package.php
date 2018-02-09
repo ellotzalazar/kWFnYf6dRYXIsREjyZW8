@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
     <div class="row">   
@@ -30,8 +31,8 @@
                                 <tbody>
                                
 
-                                  <?php $user_query=mysql_query("select * from package")or die(mysql_error());
-                                    while($row=mysql_fetch_array($user_query)){
+                                  <?php $user_query=fetchData($con,"select * from package");
+                                    while($row=$user_query->fetch_array()){
                                     $id=$row['package_id']; ?>
                                     <tr class="del<?php echo $id ?>">
                                     

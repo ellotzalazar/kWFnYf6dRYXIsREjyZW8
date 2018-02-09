@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
     <div class="row">   
@@ -28,9 +29,8 @@
                                 <tbody>
                                  
                                   <?php 
-                                $con = mysqli_connect('localhost','root','','scheduler');
-                                  $user_query=mysqli_query($con, "select * from service")or die(mysql_error());
-                                    while($row=mysqli_fetch_array($user_query)){
+                                  $user_query=fetchData($con, "select * from service");
+                                    while($row=$user_query->fetch_array()){
                                     $id=$row['service_id']; ?>
                                      <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['service_id']; ?></td> 

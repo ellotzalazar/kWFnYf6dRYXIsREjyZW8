@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
   <div class="row"> 
@@ -34,34 +35,29 @@
                                 </thead>
                                 <tbody>
                  
-                                  <?php $user_query=mysql_query("select * from photostatus where status='PENDING'")or die(mysql_error());
-                  while($row=mysql_fetch_array($user_query)){
-                  $id=$row['id'];
-                  $member_id = $row['member_id'];
-                  /* member query  */
-                  $member_query = mysql_query("select * from members where member_id = ' $member_id'")or die(mysql_error());
-                  $member_row = mysql_fetch_array($member_query);
-                  /* service query  */
-                 
+								<?php 
+									$user_query=fetchData($con,"
+															select phs.*,CONCAT(mb.firstname,' ',mb.lastname) member_name from photostatus phs
+																	LEFT JOIN members mb
+																		ON mb.member_id = phs.member_id
+																where 
+																	phs.status='PENDING'");
+									while($row=$user_query->fetch_array()){
+									  $id=$row['id'];
+									 
                   ?>
                   
-                   <tr class="del<?php echo $id ?>">
-                   <td><?php  echo $row['id'];  ?></td>
-                   <td><?php echo $member_row['firstname']." ".$member_row['lastname']; ?></td> 
-                   <td><?php  echo $row['status'];  ?></td> 
-                   <td width="100">
-                  
-                  <?php
-                                     /*    <a href="#delete<?php echo $id ?>" data-toggle="modal" rel="tooltip"  title="Delete" id="<?php echo $id; ?>" class="btn btn-danger"><i class="icon-trash icon-large"></i></a>
-                    <?php include('delete_schedule.php'); ?> */
-                    ?>
-                   
-                     <a rel="tooltip"  title="Upload" href="upload.php<?php echo '?id='.$member_id; ?>"  class="btn btn-info"><i class="icon-check icon-large"></i></a>
+									   <tr class="del<?php echo $id ?>">
+										   <td><?php  echo $row['id'];  ?></td>
+										   <td><?php echo $row['member_name']; ?></td> 
+										   <td><?php  echo $row['status'];  ?></td> 
+										   <td width="100">
+											<a rel="tooltip"  title="Upload" href="upload.php<?php echo '?id='.$row['member_id']; ?>"  class="btn btn-info"><i class="icon-check icon-large"></i></a>
                                     
-                  </td>
-                  <?php include('toolttip_edit_delete.php'); ?>
-                  </tr>
-                  <?php } ?>
+											</td>
+											<?php include('toolttip_edit_delete.php'); ?>
+										  </tr>
+							  <?php } ?>
                            
                                 </tbody>
                             </table>
