@@ -33,7 +33,7 @@
 	$service=$_POST['service'];
 	
 	
-	mysql_query("insert into service (service_offer) values('$service')")or die(mysql_error());
+	doInsertFunction($con,"insert into service (service_offer) values('$service')");
 	?> 
 	<script>
 	window.location="service.php";

@@ -1,5 +1,5 @@
 <?php
-include('dbcon.php');
+include('connect.php');
 $id=$_POST['id'];
-mysql_query("delete from service where service_id='$id'") or die(mysql_error());
+doInsertFunction($con,"delete from service where service_id='$id'");
 ?>
