@@ -1,5 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
+<?php include('connect.php'); ?>
     <div class="container">
 
 	<div class="row">	
@@ -41,38 +42,37 @@
                                 <tbody>
 								 
                                   <?php 
-                                  $con = mysqli_connect('localhost','root','','scheduler');
-                                  $user_query=mysqli_query($con, "select * from schedule where status='Pending'")or die(mysql_error());
-									while($row=mysqli_fetch_array($user_query)){
+                                  $user_query=fetchData($con, "select
+																	sch.*,
+																	CONCAT(mb.firstname,' ',mb.lastname) member_name,
+																	srv.service_offer,
+																	pck.package_name
+																from 
+																schedule sch
+																	LEFT JOIN members mb
+																		ON mb.member_id = sch.member_id
+																	LEFT JOIN service srv
+																		ON srv.service_id = sch.service_id
+																	LEFT JOIN package pck
+																		ON pck.package_id = sch.package_id
+																		
+																where
+																	sch.status='Pending'");
+									while($row=$user_query->fetch_array()){
 									$id=$row['id'];
-									$member_id = $row['member_id'];
-									$service_id = $row['service_id'];
-									$package_id = $row['package_id'];
-									$schedule_id = $row['id'];	
-									/* member query  */
-									$member_query = mysqli_query($con,"select * from members where member_id = ' $member_id'")or die(mysql_error());
-									$member_row = mysqli_fetch_array($member_query);
-									/* service query  */
-									$service_query = mysqli_query($con,"select * from service where service_id = '$service_id' ")or die(mysql_error());
-									$service_row = mysqli_fetch_array($service_query);
-
-									$package_query = mysqli_query($con,"select * from package where package_id = '$package_id' ")or die(mysql_error());
-									$package_row = mysqli_fetch_array($package_query);
-
-									$schedule_query = mysqli_query($con, "select * from schedule where id = ' $schedule_id'")or die(mysql_error());
-									$schedule_row = mysqli_fetch_array($schedule_query);
+									
 
 									?>
 									
 									 <tr class="del<?php echo $id ?>">
 									 <td><?php  echo $row['Number'];  ?></td>
-                                    <td><?php echo $member_row['firstname']." ".$member_row['lastname']; ?></td> 
+                                    <td><?php echo $row['member_name']; ?></td> 
                                     <td><?php  echo $row['date'];  ?></td> 
-                                    <td><?php  echo $service_row['service_offer'];  ?></td>
-                                    <td><?php echo $package_row['package_name']; ?></td>
-                                    <td><?php  echo $schedule_row['hours'];  ?></td> 
-                                    <td><?php  echo $schedule_row['location'];  ?></td> 
-                                    <td><?php  echo $schedule_row['total_price'];  ?></td> 
+                                    <td><?php  echo $row['service_offer'];  ?></td>
+                                    <td><?php echo $row['package_name']; ?></td>
+                                    <td><?php  echo $row['hours'];  ?></td> 
+                                    <td><?php  echo $row['location'];  ?></td> 
+                                    <td><?php  echo $row['total_price'];  ?></td> 
                                     <td><?php  echo $row['status'];  ?></td> 
                                     <td width="100">
 									

@@ -28,7 +28,7 @@
 	$service=$_POST['service_offer'];
 	
 	
-	doInsertFunction($con,"update service set service_offer='$service' where service_id='$user_id'"); ?>
+	executeUpdate($con,"update service set service_offer='$service' where service_id='$user_id'"); ?>
 
 	<script>
 	window.location="service.php";

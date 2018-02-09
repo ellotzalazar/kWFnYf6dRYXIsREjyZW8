@@ -33,7 +33,7 @@
 	$service=$_POST['service'];
 	
 	
-	doInsertFunction($con,"insert into service (service_offer) values('$service')");
+	executeUpdate($con,"insert into service (service_offer) values('$service')");
 	?> 
 	<script>
 	window.location="service.php";

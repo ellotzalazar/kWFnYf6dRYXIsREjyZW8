@@ -15,7 +15,7 @@ ini_set('max_execution_time', 1000);
  	die('connection fail: ' .mysqli_connect_error());
  }
  
- function doInsertFunction($conn,$query)
+ function executeUpdate($conn,$query)
  {
 	mysqli_query($conn,$query);
 	mysqli_close($conn);
