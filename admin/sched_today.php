@@ -34,18 +34,18 @@
 								    
 									$new = date('d/m/Y');
 							
-						
-									$user_query=mysql_query("select * from schedule where date ='$new' AND status='Pending'")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+									$con = mysqli_connect('localhost','root','','scheduler');
+									$user_query=mysqli_query($con,"select * from schedule where date ='$new' AND status='Pending'")or die(mysql_error());
+									while($row=mysqli_fetch_array($user_query)){
 									$id=$row['id'];
 									$member_id = $row['member_id'];
 									$service_id = $row['service_id'];
 									/* member query  */
-									$member_query = mysql_query("select * from members where member_id = ' $member_id'")or die(mysql_error());
-									$member_row = mysql_fetch_array($member_query);
+									$member_query = mysqli_query($con,"select * from members where member_id = ' $member_id'")or die(mysql_error());
+									$member_row = mysqli_fetch_array($member_query);
 									/* service query  */
-									$service_query = mysql_query("select * from service where service_id = '$service_id' ")or die(mysql_error());
-									$service_row = mysql_fetch_array($service_query);
+									$service_query = mysqli_query($con,"select * from service where service_id = '$service_id' ")or die(mysql_error());
+									$service_row = mysqli_fetch_array($service_query);
 									?>
 									
 									 <tr class="del<?php echo $id ?>">

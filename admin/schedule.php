@@ -40,25 +40,27 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from schedule where status='Pending'")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+                                  <?php 
+                                  $con = mysqli_connect('localhost','root','','scheduler');
+                                  $user_query=mysqli_query($con, "select * from schedule where status='Pending'")or die(mysql_error());
+									while($row=mysqli_fetch_array($user_query)){
 									$id=$row['id'];
 									$member_id = $row['member_id'];
 									$service_id = $row['service_id'];
 									$package_id = $row['package_id'];
 									$schedule_id = $row['id'];	
 									/* member query  */
-									$member_query = mysql_query("select * from members where member_id = ' $member_id'")or die(mysql_error());
-									$member_row = mysql_fetch_array($member_query);
+									$member_query = mysqli_query($con,"select * from members where member_id = ' $member_id'")or die(mysql_error());
+									$member_row = mysqli_fetch_array($member_query);
 									/* service query  */
-									$service_query = mysql_query("select * from service where service_id = '$service_id' ")or die(mysql_error());
-									$service_row = mysql_fetch_array($service_query);
+									$service_query = mysqli_query($con,"select * from service where service_id = '$service_id' ")or die(mysql_error());
+									$service_row = mysqli_fetch_array($service_query);
 
-									$package_query = mysql_query("select * from package where package_id = '$package_id' ")or die(mysql_error());
-									$package_row = mysql_fetch_array($package_query);
+									$package_query = mysqli_query($con,"select * from package where package_id = '$package_id' ")or die(mysql_error());
+									$package_row = mysqli_fetch_array($package_query);
 
-									$schedule_query = mysql_query("select * from schedule where id = ' $schedule_id'")or die(mysql_error());
-									$schedule_row = mysql_fetch_array($schedule_query);
+									$schedule_query = mysqli_query($con, "select * from schedule where id = ' $schedule_id'")or die(mysql_error());
+									$schedule_row = mysqli_fetch_array($schedule_query);
 
 									?>
 									

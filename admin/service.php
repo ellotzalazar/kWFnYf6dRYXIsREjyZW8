@@ -27,8 +27,10 @@
                                 </thead>
                                 <tbody>
                                  
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-                                    while($row=mysql_fetch_array($user_query)){
+                                  <?php 
+                                $con = mysqli_connect('localhost','root','','scheduler');
+                                  $user_query=mysqli_query($con, "select * from service")or die(mysql_error());
+                                    while($row=mysqli_fetch_array($user_query)){
                                     $id=$row['service_id']; ?>
                                      <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['service_id']; ?></td> 

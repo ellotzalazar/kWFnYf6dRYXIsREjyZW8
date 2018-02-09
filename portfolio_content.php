@@ -8,7 +8,7 @@
           $str = "SELECT image from portfolio";
 
           $result = mysqli_query($con,$str);
-          
+          if($result){
             $i=0;
 while($row = mysqli_fetch_array($result)){
     if($i==0){
@@ -22,6 +22,7 @@ while($row = mysqli_fetch_array($result)){
         ?></ul><?php
         $i=0;
     }
+}
 }
         ?>
     

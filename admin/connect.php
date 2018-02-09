@@ -3,7 +3,7 @@
  $servername = "localhost";
  $username = "root";
  $password = "";
- $dbname = "cedd";
+ $dbname = "scheduler";
 
  $con = mysqli_connect($servername, $username, $password, $dbname);
 
