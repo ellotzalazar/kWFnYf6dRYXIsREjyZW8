@@ -9,8 +9,8 @@
                     <div class="nav-collapse collapse">
 					<ul class="nav">
 					<?php
-					$query=mysql_query("select * from members where member_id='$session_id'")or die(mysql_error());
-					$row=mysql_fetch_array($query);
+					$result=fetchData($conn,"select * from members where member_id='$session_id'");
+					$row= $result->fetch_assoc();
 					?>
 					<li><a href="dasboard.php" class=""><i class="icon-home icon-large"></i></a></li>			
 					<li class="active" ><a href="dasboard.php" class="">Welcome:&nbsp;<i class="icon-user icon-large"></i>&nbsp;<?php echo $row['firstname']." ".$row['lastname']; ?></a></li>			

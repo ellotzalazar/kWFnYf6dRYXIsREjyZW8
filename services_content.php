@@ -8,8 +8,9 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+                                  <?php 
+								  $user_query=fetchData($conn,"select * from service");
+									while($row=$user_query->fetch_assoc()){
 									$id=$row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['service_offer']; ?></td> 

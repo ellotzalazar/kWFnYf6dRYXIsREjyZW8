@@ -97,19 +97,21 @@
 		$time = $_POST['time'];
 		$location = $_POST['location'];
 		
-		$query = mysql_query("select * from schedule where date = '$date' and member_id = '$session_id' ")or die(mysql_error());
-		$count = mysql_num_rows($query);
+		$query = "select * from schedule where date = '$date' and member_id = '$session_id' ";
+		$result = fetchData($conn,$query);
+		$count = $result->num_rows;
 	/* 	echo $count; */
 		if ($count  > 0){ ?>
 		<script>
-		alert('You have already schedule on this date');
+			alert('You have already schedule on this date');
 		</script>
 		<?php
 		}
 
 		else{
-        $queryy = mysql_query("select * from schedule where date = '$date'")or die(mysql_error());
-		$counts= mysql_num_rows($queryy);
+        $queryy = "select * from schedule where date = '$date'";
+		$result = fetchData($conn,$query);
+		$counts= $result->num_rows;
 		$equal = $counts + 1 ;
 
 
@@ -117,8 +119,8 @@
 
 		if ($equal > 5){ ?>
 		<script>
-		alert('This date has been fully booked. Please try and book this event to a different date. Thank you!');
-		window.location="dasboard.php";
+			alert('This date has been fully booked. Please try and book this event to a different date. Thank you!');
+			window.location="dasboard.php";
 		</script>
 		<?php
 		}
@@ -188,19 +190,20 @@
 	<?php
 
 
-$queryyy = mysql_query("SELECT * FROM service WHERE status = 1 ORDER BY service_offer ASC");
-$rowCount = mysql_num_rows($queryyy);
+$queryyy = fetchData($conn,"SELECT * FROM service WHERE status = 1 ORDER BY service_offer ASC");
+$rowCount = $queryyy->num_rows;
 ?>
 <select name="service" id="service">
     <option >Select Service</option>
     <?php
     if($rowCount > 0){
-        while($row = mysql_fetch_assoc($queryyy)){ 
+        while($row = $queryyy->fetch_assoc()){ 
             echo '<option value="'.$row['service_id'].'">'.$row['service_offer'].'</option>';
         }
     }else{
         echo '<option value="">Service not available</option>';
     }
+
     ?>
 </select>
 </div>
@@ -295,9 +298,9 @@ $rowCount = mysql_num_rows($queryyy);
 						
 					
 				<?php 
-				$note_query = mysql_query("select * from note ")or die(mysql_error());
-				$note_count =mysql_num_rows($note_query);
-				while($note_row = mysql_fetch_array($note_query)){
+				$note_query = fetchData($conn,"select * from note ");
+				$note_count =$note_query->num_rows;
+				while($note_row = $note_query->fetch_assoc()){
 				if ($note_count > 0){ ?>
 				
 				<li><i class="icon-stop icon-large"></i>&nbsp;<?php echo $note_row['message'] ?></li>
@@ -320,8 +323,8 @@ $rowCount = mysql_num_rows($queryyy);
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+                                  <?php $user_query=fetchData($conn,"select * from service");
+									while($row= $user_query->fetch_assoc()){
 									$id=$row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['service_offer']; ?></td> 

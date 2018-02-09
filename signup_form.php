@@ -29,14 +29,14 @@
 			<div class="controls">
 			<input type="text" name="firstname" value="<?php if (isset($_POST['submit'])){echo $firstname;} ?>" placeholder="Firstname" required> 
 			<input type="text" name="lastname"  value="<?php if (isset($_POST['submit'])){echo $lastname;} ?>" placeholder="Lastname" required> 
-			<input type="text" name="middlename" value="<?php if (isset($_POST['submit'])){echo $middlename;} ?>" placeholder="Middlename" required> 
+			<input type="text" name="middlename" value="<?php if (isset($_POST['submit'])){echo $middlename;} ?>" placeholder="Middlename" > 
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="inputPassword">Address: </label>
 			<div class="controls">
-			<input type="text" name="address" value="<?php if (isset($_POST['submit'])){echo $address;} ?>" placeholder="Address" required>
+			<textarea name="address" placeholder="Address" required><?php if (isset($_POST['submit'])){echo $address;} ?></textarea>
 			</div>
 		</div>
 
@@ -104,13 +104,32 @@
 				})
 			</script>
 				<img  src="generatecaptcha.php?rand=<?php echo rand(); ?>" id='captchaimg' > 
-				<a href='javascript: refreshCaptcha();'><i data-placement="right" id="refresh"  title="Click to Refresh Code" class="icon-refresh icon-large icon-spin"></i></a> 
+				<a href='javascript: refreshCaptcha();'><i data-placement="right" id="refresh"  title="Click to Refresh Code" class="icon-refresh icon-large"></i></a> 
 				<script language='JavaScript' type='text/javascript'>
-			function refreshCaptcha()
-			{
-				var img = document.images['captchaimg'];
-				img.src = img.src.substring(0,img.src.lastIndexOf("?"))+"?rand="+Math.random()*1000;
-			}
+					function refreshCaptcha()
+					{
+						$('.icon-refresh').addClass('icon-spin');
+						var img = document.images['captchaimg'];
+						img.src = img.src.substring(0,img.src.lastIndexOf("?"))+"?rand="+Math.random()*1000;
+						setTimeout(function(){
+							$('.icon-refresh').removeClass('icon-spin');
+						},1000);
+					}
+					
+					$(function(){
+						$('.terms_apply').click(function(){
+							var that = $(this);
+							if(that.is(':checked') == true)
+							{
+								
+								$('.form-submit').prop('disabled',false);
+							}
+							else
+							{
+								$('.form-submit').prop('disabled',true);
+							}
+						});
+					})
 			</script>
 				
 				</div>
@@ -119,14 +138,21 @@
 	<div class="control-group">
     	<label class="control-label" for="inputPassword">Enter the Code Above: </label>
     <div class="controls">
-    <input id="code" name="code" type="text" placeholder="Enter code here" required></td>
-
+		<input id="code" name="code" type="text" placeholder="Enter code here" required></td>
+	
+		<div class="form-group">
+			<input type="checkbox" name="terms" required class="terms_apply">
+			I have read and agreed to the 
+			
+			<a href="terms.php" target="_blank">Sterling Digital User's Agreement and Terms of use.</a>
+		</div>
+	
     <div >
-				<div class="controls">
-				<button name="submit" type="submit" class="btn btn-info"><i class="icon-signin icon-large"></i>&nbsp;Sign Up</button>
-				</div>
-			</div>
-	    </div>
+		<div class="controls">
+		<button name="submit" type="submit" disabled class="btn btn-info form-submit"><i class="icon-signin icon-large"></i>&nbsp;Sign Up</button>
+		</div>
+	</div>
+	</div>
 	
 	<?php 
 
@@ -150,9 +176,10 @@ if(isset($_POST['submit']))
 <?php
 }else if(strcmp($_SESSION['code'], $_POST['code']) == 0 && $password == $cpassword){ ?>
 <?php
-	mysql_query("insert into members (firstname,lastname,middlename,address,email,contact_no,birthdate,gender,username,password,pt_id)
-	values ('$firstname','$lastname','$middlename','$address','$email','$contact_no','$birthdate','$gender','$username','$password',2)
-	")or die(mysql_error());?>
+	doInsertFunction($conn,"insert into members (firstname,lastname,middlename,address,email,contact_no,birthdate,gender,username,password)
+	values ('$firstname','$lastname','$middlename','$address','$email','$contact_no','$birthdate','$gender','$username','$password')
+	");
+	?>
 <script type="text/javascript">
 window.location='success.php';
 </script>

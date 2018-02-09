@@ -101,14 +101,34 @@
 		
 			# code...
 		
-		$pack = mysql_query("select * from package where package_id='$package1'")or die(mysql_error());
-		$row= mysql_fetch_array($pack);
+		$pack = fetchData($conn,"select * from package where package_id='$package1'");
+		$row= $pack->fetch_assoc();
 
 		$packprice=$row['price'];
 		$total=(($hours1-4)*250)+$packprice;
 
-		mysql_query("insert into schedule (member_id,date,service_id,package_id,hours,location,venue,time,total_price,number,status) values('$session_id','$date1','$service1','$package1','$hours1','$location1','$venue1','$time1','$total','$equal','Pending')")or die(mysql_error());
 		?>
+		<script>
+			//'$session_id','$date1','$service1','$package1','$hours1','$location1','$venue1','$time1','$total','$equal','Pending'
+			$(function(){
+				$.post('yes_insert.php',{
+											'session_id':'<?=$session_id?>',
+											'date':'<?=$date1?>',
+											'service':'<?=$service1?>',
+											'package':'<?=$package1?>',
+											'hours':'<?=$hours1?>',
+											'location':'<?=$location1?>',
+											'venue':'<?=$venue1?>',
+											'time':'<?=$time1?>',
+											'total':'<?=$total?>',
+											'equal':'<?=$equal?>',
+											'status':'Pending',
+										})
+					.done(function(result){
+						alert(result);
+					});
+			})
+		</script>
 		<div class="yes"><h3>Your appointment has been set on  <?php echo  $date1; ?>. Thank you for choosing us!</h3></div>
 		
 		<h4>Details:</h4>
@@ -150,8 +170,8 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
+                                  <?php $user_query=fetchData($conn,"select * from service");
+									while($row=$user_query->fetch_assoc()){
 									$id=$row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
                                     <td><?php echo $row['service_offer']; ?></td> 
