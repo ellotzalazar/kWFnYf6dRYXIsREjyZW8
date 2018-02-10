@@ -1,29 +1,30 @@
 
 
-        <div class="album span12">
+        <div class="">
            <?php
-          include 'admin/connect.php';
          
           
-          $str = "SELECT image from portfolio";
+          $str = "SELECT * from portfolio ORDER BY type ASC,date_created DESC";
 
-          $result = mysqli_query($con,$str);
+          $result = fetchData($conn,$str);
           if($result){
             $i=0;
-while($row = mysqli_fetch_array($result)){
-    if($i==0){
-        ?><ul><?php
-    }
-    ?>
-    <li class="span4"><img src="admin/portfolio/'.$row['image']"></img></li>
-    <?php
-    $i++;
-    if($i==5){
-        ?></ul><?php
-        $i=0;
-    }
-}
-}
+			while($row = mysqli_fetch_array($result)){
+				?>
+				<div class="span5 gallery-frame">
+					<?php if($row['type'] == 'image'):?>
+						<img class="gallery-content" src="admin/portfolio/<?php echo $row['file_name']?>">
+					<?php else:?>
+							<video class="gallery-content" controls>
+							  <source src="admin/portfolio/video/<?php echo $row['file_name']?>" type="video/mp4">
+							  Your browser does not support the video tag.
+							</video> 
+					<?php endif;?>
+				</div>
+		<?php
+				}
+			}
+		
         ?>
     
     </div>
