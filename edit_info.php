@@ -82,8 +82,11 @@
 					
 				<div class="alert alert-info">Edit Personal Information</div>
 	<?php 
-	$member_query = mysql_query("select * from members where member_id='$session_id'")or die(mysql_error());
-	$member_row= mysql_fetch_array($member_query);
+
+	$query = "select * from members where member_id='$session_id'";
+	$result = mysqli_query($conn,$query);
+	$member_row = mysqli_fetch_array($result);
+
 	?>
 	 <form class="form-horizontal" method="POST">
 		<div class="control-group">
@@ -149,8 +152,9 @@
 	$gender = $_POST['gender'];
 	$email = $_POST['email'];
 		
-	mysql_query("update members set firstname='$firstname' , lastname='$lastname' , middlename='$middlename' , address='$address' ,
-	birthdate='$birthdate' , gender='$gender' , email='$email' where member_id='$session_id' ") or die(mysql_error());
+	$query = "update members set firstname='$firstname' , lastname='$lastname' , middlename='$middlename' , address='$address' ,
+	birthdate='$birthdate' , gender='$gender' , email='$email' where member_id='$session_id' ";
+	mysqli_query($conn,$query);
 	?>
 	<script>
 	window.location = 'edit_info.php'; 
@@ -170,9 +174,11 @@
 						
 					
 				<?php 
-				$note_query = mysql_query("select * from note ")or die(mysql_error());
-				$note_count =mysql_num_rows($note_query);
-				while($note_row = mysql_fetch_array($note_query)){
+				$query = "select * from note";
+				$note_query = mysqli_query($conn,$query);
+				$note_count = $note_query->num_rows;
+
+				while($note_row = $note_query->fetch_assoc()){
 				if ($note_count > 0){ ?>
 				
 				<li><i class="icon-stop icon-large"></i>&nbsp;<?php echo $note_row['message'] ?></li>
@@ -194,11 +200,13 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
-									$id=$row['service_id']; ?>
+                                  <?php 
+                                  $query = "select * from service";
+                                  $user_query=fetchData($conn,$query);
+									while($note_row = $user_query->fetch_assoc() ){
+									$id=$note_row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
-                                    <td><?php echo $row['service_offer']; ?></td>                   
+                                    <td><?php echo $note_row['service_offer']; ?></td>                   
 									<?php } ?>
                            
                                 </tbody>

@@ -1,6 +1,6 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
-<?php include('dbcon.php'); ?>
+<?php require_once('dbcon.php'); ?>
 <link rel="stylesheet" type="text/css" href="css/album.css">
 <div class="container">
 		<div>
@@ -14,7 +14,8 @@
 				<div class="alert alert-info">My Gallery</div>
 				<div class="album">
 					 <?php
-          include 'admin/connect.php';
+          // require_once 'admin/connect.php';
+          $con = $conn;
           $myid=$_SESSION['id'];
           
           $str = "SELECT * from images where member_id='$myid'";

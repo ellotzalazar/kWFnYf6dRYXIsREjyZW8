@@ -32,7 +32,7 @@
                                         <th>Service</th> 
                                         <th>Package</th>
                                         <th>Hours</th>
-                                        <th>Location</th>                                
+                                        <th>Location/Venue</th>                                
                                         <th>Price</th>                                 
                                         <th>Status</th>
                                         <th>Action</th>
@@ -70,7 +70,7 @@
                                     <td><?php  echo $row['service_offer'];  ?></td>
                                     <td><?php echo $row['package_name']; ?></td>
                                     <td><?php  echo $row['hours'];  ?></td> 
-                                    <td><?php  echo $row['location'];  ?></td> 
+                                    <td><?php  echo $row['venue']." ".$row['location'] .", Cavite";  ?></td> 
                                     <td><?php  echo $row['total_price'];  ?></td> 
                                     <td><?php  echo $row['status'];  ?></td> 
                                     <td width="100">

@@ -22,6 +22,9 @@
                                         <th>Member</th>
                                         <th>Date</th>                                 
                                         <th>Service</th>                                 
+                                        <th>Package</th>
+                                        <th>Hours</th>
+                                        <th>Location/Venue</th>                                 
                                         <th>Price</th>                                 
                                         <th>Status</th>
                                         <th>Action</th>
@@ -36,13 +39,18 @@
 							
 									$user_query= fetchData($con,"SELECT 
 																	sch.*,CONCAT(mb.firstname,' ',mb.lastname) member_name,
-																	srv.service_offer
+																	srv.service_offer,
+																	package.package_name
 																FROM 
 																	schedule sch
 																	LEFT JOIN members mb
 																		ON mb.member_id = sch.member_id
 																	LEFT JOIN service srv
 																		ON srv.service_id = sch.service_id
+																	LEFT JOIN package 
+																		ON package.package_id = sch.package_id
+																	LEFT JOIN 
+
 																where 
 																		sch.date = '$new' 
 																	AND 
@@ -58,6 +66,9 @@
                                     <td><?php echo $row['member_name']; ?></td> 
                                     <td><?php  echo $row['date'];  ?></td> 
                                     <td><?php  echo $row['service_offer'];  ?></td>
+                                    <td><?php echo $row['package_name']; ?></td>
+                                    <td><?php  echo $row['hours'];  ?></td> 
+                                    <td><?php  echo $row['venue']." ".$row['location'] ,", Cavite";  ?></td> 
                                     <td><?php  echo $row['total_price'];  ?></td> 
                                     <td><?php  echo $row['status'];  ?></td> 
                                     <td width="100">

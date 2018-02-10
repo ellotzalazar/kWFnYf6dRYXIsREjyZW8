@@ -105,42 +105,51 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from schedule where member_id = '$session_id' ")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
-									$id=$row['id'];
-									$member_id = $row['member_id'];
-									$service_id = $row['service_id'];
-									$package_id = $row['package_id'];
-									$schedule_id = $row['id'];	
+                                  <?php 
+                                 $query = "
+                                  			select 
+                                  				schedule.*,
+                                  				service.service_offer,
+                                  				package.package_name,
+                                  				schedule.hours,
+                                  				schedule.location,
+                                  				schedule.total_price
+                                  			from 
+                                  				schedule schedule
+
+                                  				INNER JOIN members members
+                                  				ON members.member_id = schedule.member_id
+
+                                  				INNER JOIN service service
+                                  				ON schedule.service_id = service.service_id
+
+                                  				INNER JOIN package package
+                                  				ON package.package_id = schedule.package_id
 
 
+                                  			where 
 
-									/* member query  */
-									$member_query = mysql_query("select * from members where member_id = ' $member_id'")or die(mysql_error());
-									$member_row = mysql_fetch_array($member_query);
-									/* service query  */
-									$service_query = mysql_query("select * from service where service_id = '$service_id' ")or die(mysql_error());
-									$service_row = mysql_fetch_array($service_query);
-
-									$package_query = mysql_query("select * from package where package_id = '$package_id' ")or die(mysql_error());
-									$package_row = mysql_fetch_array($package_query);
-
-									$schedule_query = mysql_query("select * from schedule where id = ' $schedule_id'")or die(mysql_error());
-									$schedule_row = mysql_fetch_array($schedule_query);
+                                  				schedule.member_id = '$session_id' 
+                                  	";
+   									$result = fetchData($conn,$query);
+									$rowCount = $result->num_rows;
+									    
+									    //Display states list
+									if($rowCount > 0){
+										while($row = $result->fetch_assoc() ){ 
 									?>
-									
 									 <tr class="del<?php echo $id ?>">
-									
-                                    <td><?php  echo $row['date'];  ?></td> 
-                                    <td><?php  echo $service_row['service_offer'];  ?></td>
-                                    <td><?php echo $package_row['package_name']; ?></td>
-                                    <td><?php  echo $schedule_row['hours'];  ?></td> 
-                                    <td><?php  echo $schedule_row['location'];  ?></td> 
-                                    <td><?php  echo $schedule_row['total_price'];  ?></td> 
-                             
-							
+	                                    <td><?php  echo $row['date'];  ?></td> 
+	                                    <td><?php  echo $row['service_offer'];  ?></td>
+	                                    <td><?php echo $row['package_name']; ?></td>
+	                                    <td><?php  echo $row['hours'];  ?></td> 
+	                                    <td><?php  echo $row['location'];  ?></td> 
+	                                    <td><?php  echo $row['total_price'];  ?></td> 
 									</tr>
-									<?php } ?>
+										<?php 
+										}
+									}
+									 ?>
                            
                                 </tbody>
                             </table>
@@ -159,9 +168,11 @@
 						
 					
 				<?php 
-				$note_query = mysql_query("select * from note ")or die(mysql_error());
-				$note_count =mysql_num_rows($note_query);
-				while($note_row = mysql_fetch_array($note_query)){
+				$query = "select * from note ";
+				$note_query = fetchData($conn,$query);
+				$note_count = $note_query->num_rows;
+
+				while($note_row = $note_query->fetch_assoc() ){ 
 				if ($note_count > 0){ ?>
 				
 				<li><i class="icon-stop icon-large"></i>&nbsp;<?php echo $note_row['message'] ?></li>
@@ -181,12 +192,14 @@
                                 </thead>
                                 <tbody>
 								 
-                                  <?php $user_query=mysql_query("select * from service")or die(mysql_error());
-									while($row=mysql_fetch_array($user_query)){
-									$id=$row['service_id']; ?>
+                                  <?php 
+                                  $query = "select * from service";
+                                  $user_query=fetchData($conn,$query);
+									while($note_row = $user_query->fetch_assoc() ){
+									$id=$note_row['service_id']; ?>
 									 <tr class="del<?php echo $id ?>">
-                                    <td><?php echo $row['service_offer']; ?></td> 
-                                                          
+                                   		 <td><?php echo $note_row['service_offer']; ?></td> 
+                                     </tr>    
 									<?php } ?>
                            
                                 </tbody>
