@@ -12,7 +12,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputPassword">Password</label>
 				<div class="controls">
-				<input type="text" name="password" id="inputPassword" value="<?php echo $row['password']; ?>" required>
+				<input type="password" name="password" id="inputPassword" value="<?php echo $row['password']; ?>" required>
 				</div>
 			</div>
 			<div class="control-group">
@@ -34,10 +34,11 @@
 	$username=$_POST['username'];
 	$password=$_POST['password'];
 	
-	mysql_query("update users set username='$username', password='$password' where user_id='$user_id'")or die(mysql_error()); ?>
+	executeUpdate($con,"update users set username='$username', password='$password' where user_id='$user_id'") ?>
 	<script>
-	window.location="user.php";
+		window.location="user.php";
 	</script>
 	<?php
+		unset($_POST['edit']);
 	}
 	?>

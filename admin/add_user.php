@@ -29,9 +29,18 @@
 	
 	<?php
 	if (isset($_POST['submit'])){
-	$username=$_POST['username'];
-	$password=$_POST['password'];
-	
-	mysql_query("insert into users (username,password) values('$username','$password')")or die(mysql_error());
+		$username=$_POST['username'];
+		$password=$_POST['password'];
+		$user = fetchData($con,"SELECT * FROM users WHERE username = '{$username}'");
+		if($user->num_rows > 0)
+		{
+			echo '<script>alert("Username already exists!")</script>';
+		}
+		else
+		{
+			executeUpdate($con,"insert into users (username,password) values('$username','$password')");
+			header('Location:user.php');
+		}
+		unset($_POST['submit']);
 	}
 	?>
