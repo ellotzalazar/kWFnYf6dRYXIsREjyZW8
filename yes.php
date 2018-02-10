@@ -17,9 +17,9 @@
 							var timerID = null;
 							var timerRunning = false;
 							function stopclock (){
-							if(timerRunning)
-							clearTimeout(timerID);
-							timerRunning = false;
+								if(timerRunning)
+								clearTimeout(timerID);
+								timerRunning = false;
 							}
 							function showtime () {
 							var now = new Date();
@@ -85,7 +85,6 @@
 				</div>
 				<div class="span6">
 					<br>
-				<div class="alert alert-info">Select Date of Appointment and Service Offer</div>
 
 		<!-- reservation -->
 		<?php if (isset($_POST['yes'])){ 
@@ -106,36 +105,37 @@
 
 		$packprice=$row['price'];
 		$total=(($hours1-4)*250)+$packprice;
-
+		
 		?>
 		<script>
-			//'$session_id','$date1','$service1','$package1','$hours1','$location1','$venue1','$time1','$total','$equal','Pending'
 			$(function(){
 				$.post('yes_insert.php',{
-											'session_id':'<?=$session_id?>',
-											'date':'<?=$date1?>',
-											'service':'<?=$service1?>',
-											'package':'<?=$package1?>',
-											'hours':'<?=$hours1?>',
-											'location':'<?=$location1?>',
-											'venue':'<?=$venue1?>',
-											'time':'<?=$time1?>',
-											'total':'<?=$total?>',
-											'equal':'<?=$equal?>',
-											'status':'Pending',
+											'session_id':'<?=$session_id;?>',
+											'date':'<?=$date1;?>',
+											'service':'<?=$service1;?>',
+											'package':'<?=$package1;?>',
+											'hours':'<?=$hours1;?>',
+											'location':'<?=$location1;?>',
+											'venue':'<?=$venue1;?>',
+											'time':'<?=$time1;?>',
+											'total':'<?=$total;?>',
+											'equal':'<?=$equal;?>',
+											'status':'Pending'
 										})
 					.done(function(result){
-						alert(result);
+						$('.details-container').html(result);
 					});
-			})
+			});
 		</script>
 		<div class="yes"><h3>Your appointment has been set on  <?php echo  $date1; ?>. Thank you for choosing us!</h3></div>
-		
+		<?php
+			$sch = fetchData($conn,"SELECT * FROM schedule WHERE ")
+		?>
 		<h4>Details:</h4>
-		<div>Hours of service: <?php echo  $hours1; ?></div>
-		<div>Time of event: <?php echo  date('h:i a',strtotime($time1)); ?></div>
-		<div>Location of event: <?php echo  $location1; ?></div>
-		<div>Total price: <?php echo  $total; ?></div>
+		<div class="details-container">
+		
+		</div>
+		
 
 		<div>To see the full details of your schedule kindly refer to the My Schedule tab above. </div>
 		

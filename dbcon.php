@@ -11,6 +11,7 @@ if (mysqli_connect_errno())
  function doInsertFunction($conn,$query)
  {
 	mysqli_query($conn,$query);
+	return mysqli_insert_id($conn);;
 	mysqli_close($conn);
  }
  

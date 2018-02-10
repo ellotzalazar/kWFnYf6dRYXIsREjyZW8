@@ -213,9 +213,16 @@ $rowCount = $queryyy->num_rows;
 <div class="control-group">
 		<label class="control-label" for="inputEmail">Package</label>
 			<div class="controls">
-<select name="package" id="package">
-    <option value="">Select service first</option>
-</select>
+			<select name="package" id="package">
+				<option value="">Select service first</option>
+			<?php
+				$pck = fetchData($conn,"SELECT * FROM package ORDER BY package_name");
+				while($p = $pck->fetch_assoc())
+				{
+			?>
+					<option value="<?php echo $p['package_id']?>"><?php echo $p['package_name'].'-'.$p['description']?></option>
+			<?php }?>
+			</select>
 </div>
 </div>
 
