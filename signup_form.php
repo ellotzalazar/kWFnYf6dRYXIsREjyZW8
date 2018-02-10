@@ -7,17 +7,16 @@
 		$address=$_POST['address'];
 		$email=$_POST['email'];
 		$contact_no=$_POST['contact_no'];
-		$age=$_POST['birthdate'];
+		$birthdate=$_POST['birthdate'];
 		$gender=$_POST['gender'];
 		$username=$_POST['username'];
 		$password=$_POST['password'];
 		$cpassword=$_POST['cpassword'];
-		
 			if($cpassword!=$password){
-		$a="Password do not Match";
-		}else{
-		$a = "";
-		}
+			$a="Password do not Match";
+			}else{
+			$a = "";
+			}
 	}
 	?>
 <form method="post">	
@@ -176,12 +175,34 @@ if(isset($_POST['submit']))
 <?php
 }else if(strcmp($_SESSION['code'], $_POST['code']) == 0 && $password == $cpassword){ ?>
 <?php
-	doInsertFunction($conn,"insert into members (firstname,lastname,middlename,address,email,contact_no,birthdate,gender,username,password)
-	values ('$firstname','$lastname','$middlename','$address','$email','$contact_no','$birthdate','$gender','$username','$password')
-	");
+	$exist = fetchData($conn,"SELECT * FROM members WHERE username = '$username'");
+	if($exist->num_rows == 0)
+	{
+		$emailExist = fetchData($conn,"SELECT * FROM members WHERE email = '$email'");
+		if($emailExist->num_rows == 0)
+		{
+			doInsertFunction($conn,"insert into members (firstname,lastname,middlename,address,email,contact_no,birthdate,gender,username,password,status)
+			values ('$firstname','$lastname','$middlename','$address','$email','$contact_no','$birthdate','$gender','$username','$password','not confirmed')
+			");
+			require 'email.php';
+			$link = 'http://ellotzero.x10host.com/';
+			$src = $link.'success.php?user='.base64_encode($username);
+			Email::sendConfirmation($src,$email, $username,$link);
+		}
+		else
+		{
+			echo '<script>alert("Email already exists!")</script>';
+			exit;
+		}
+	}
+	else
+	{
+		echo '<script>alert("Username already exists!");</script>';
+		exit;
+	}
 	?>
 <script type="text/javascript">
-window.location='success.php';
+window.location='success.php?src=<?php echo base64_encode($username)?>';
 </script>
 <?php
 }else{

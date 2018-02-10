@@ -11,7 +11,7 @@ $mail->sendConfirmation($src,$email, $person,$link);
 */
 Class Email{
 
-	function sendConfirmation($src,$email, $person,$link){
+	static function sendConfirmation($src,$email, $person,$link){
 		
 		$systemName = 'Sterling Digital';
 		$mailTitle = 'Sterling Digital';
@@ -19,7 +19,7 @@ Class Email{
 		$actionContent = 'Verify';
 		$systemLogoLink = $link.'img/dr.png';
 
-		$body = $this->emailBody($link,$systemName,$mailTitle,$mailContent,$systemLogoLink,$src, $actionContent);
+		$body = self::emailBody($link,$systemName,$mailTitle,$mailContent,$systemLogoLink,$src, $actionContent);
 
 		$to = $email;
 		$subject = "Sterling Digital Confirmation";
@@ -30,9 +30,9 @@ Class Email{
 		$headers .= "From: <noreply@ellotzero.x10host.com>No Reply Sterling Digital";
 		//*
 		if(mail($to,$subject,$txt,$headers)){
-			echo 'sent';
+			return 'sent';
 		} else {
-			echo 'error';
+			return 'error';
 		}
 		// */
 	}
