@@ -41,7 +41,11 @@
 			</div><div class="control-group">
 				<label class="control-label" for="inputEmail">Gender</label>
 				<div class="controls">
-				<input type="text" id="inputEmail" name="gender" placeholder="Gender" required>
+				<select id="inputEmail" name="gender" placeholder="Gender" required>
+					<option selected disabled></option>
+					<option>Male</option>
+					<option>Female</option>
+				</select>
 				</div>
 			</div>
 			<div class="control-group">
@@ -71,21 +75,29 @@
 	
 	<?php
 	if(isset($_POST['submit']))
-{
-	$firstname=$_POST['firstname'];
-	$lastname=$_POST['lastname'];
-	$middlename=$_POST['middlename'];
-	$birthdate=$_POST['birthdate'];
-	$gender=$_POST['gender'];
-	$address=$_POST['address'];
-	$email=$_POST['email'];
-	$contact_no=$_POST['contact_no'];
-	$username=$_POST['username'];
-	$password=$_POST['password'];
-	
-
-	mysql_query("insert into members (firstname,lastname,age,gender,address,email,contact_no,username,password)
-	values ('$firstname','$lastname','$birthdate','$gender','$address','$email','$contact_no','$username','$password')
-	")or die(mysql_error());
+	{
+		$firstname=$_POST['firstname'];
+		$lastname=$_POST['lastname'];
+		$middlename=$_POST['middlename'];
+		$birthdate=$_POST['birthdate'];
+		$gender=$_POST['gender'];
+		$address=$_POST['address'];
+		$email=$_POST['email'];
+		$contact_no=$_POST['contact_no'];
+		$username=$_POST['username'];
+		$password=$_POST['password'];
+			$exist = fetchData($con,"SELECT * FROM members WHERE username = '$username'");
+			if($exist->num_rows > 0)
+			{
+				echo '<script>alert("Username already exists.")</script>';
+			}
+			else
+			{
+				executeUpdate($con,"insert into members (firstname,lastname,birthdate,gender,address,email,contact_no,username,password)
+				values ('$firstname','$lastname','$birthdate','$gender','$address','$email','$contact_no','$username','$password')
+				");
+		
+			}
+			echo '<script>window.location = "members.php";</script>';
 	}
 	?>

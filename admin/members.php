@@ -31,7 +31,7 @@
                                 </thead>
                                 <tbody>
                                  
-                                  <?php $user_query=fetchData($con,"select * from members")or die(mysql_error());
+                                  <?php $user_query=fetchData($con,"select * from members");
                                     while($row=$user_query->fetch_assoc()){
                                     $id=$row['member_id']; ?>
                                      <tr class="del<?php echo $id ?>">
@@ -42,7 +42,7 @@
                                     <td><?php echo $row['contact_no']; ?></td> 
                                     <td><?php echo $row['email']; ?></td> 
                                     <td width="100">
-                                        <a rel="tooltip"  title="Delete" id="<?php echo $id; ?>" class="btn btn-danger"><i class="icon-trash icon-large"></i></a>
+                                        <a rel="tooltip" onclick="deleteMember(<?php echo $id?>)" title="Delete" id="<?php echo $id; ?>" class="btn btn-danger"><i class="icon-trash icon-large"></i></a>
                                         <a rel="tooltip"  title="Edit" id="e<?php echo $id; ?>" href="#edit<?php echo $id; ?>" data-toggle="modal" class="btn btn-success"><i class="icon-pencil icon-large"></i></a>
                                     <?php include('edit_member.php'); ?>
                                     </td>
@@ -54,23 +54,21 @@
                             </table>
                             
 <script type="text/javascript">
-        $(document).ready( function() {
-            $('.btn-danger').click( function() {
-                var id = $(this).attr("id");
+       function deleteMember(id){
                 if(confirm("Are you sure you want to delete this Member?")){
                     $.ajax({
                         type: "POST",
                         url: "delete_member.php",
-                        data: ({id: id}),
+                        data: {id: id},
                         cache: false,
                         success: function(html){
-                        $(".del"+id).fadeOut('slow'); 
+							$(".del"+id).fadeOut('slow'); 
                         } 
                     }); 
                 }else{
                     return false;}
-            });             
-        });
+                        
+        }
     </script>
 
                         </div>

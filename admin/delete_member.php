@@ -1,5 +1,5 @@
 <?php
-include('dbcon.php');
+include('connect.php');
 $id=$_POST['id'];
-mysql_query("delete from members where member_id='$id'") or die(mysql_error());
+executeUpdate($con,"delete from members where member_id='$id'");
 ?>

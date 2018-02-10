@@ -84,10 +84,11 @@
 	$password=$_POST['password'];
 	
 
-	mysql_query("update members set firstname='$firstname',lastname='$lastname',middlename='$middlename',address='$address',email='$email',contact_no='$contact_no',birthdate='$birthdate',gender='$gender',username='$username', password='$password' where member_id='$member_id'")or die(mysql_error());
+	executeUpdate($con,"update members set firstname='$firstname',lastname='$lastname',middlename='$middlename',address='$address',email='$email',contact_no='$contact_no',birthdate='$birthdate',gender='$gender',username='$username', password='$password' where member_id='$member_id'");
 	?>
 	<script>
-	window.location="members.php";
+		alert('Member update success!');
+		window.location="members.php";
 	</script>
 	<?php
 	}
