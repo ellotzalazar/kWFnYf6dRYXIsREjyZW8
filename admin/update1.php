@@ -1,8 +1,8 @@
 <?php
-include('dbcon.php');
-$get_id = $_GET['id'];
-$sids=$_GET['sid'];
-mysql_query("insert into photostatus (member_id,status) values('$get_id','PENDING')")or die(mysql_error());
-mysql_query("update schedule set status = 'Done' where id = '$sids' ")or die(mysql_error());
+include('connect.php');
+$get_id = $_GET['member_id'];
+$sids=$_GET['id'];
+executeUpdate($con,"insert into photostatus (member_id,status) values('$get_id','PENDING')");
+executeUpdate($con,"update schedule set status = 'Done' where id = '$sids' ");
 header('location:sched_today.php'); 
 ?>

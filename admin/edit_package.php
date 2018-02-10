@@ -3,6 +3,10 @@
 		<div class="modal-body">
 			<div class="alert alert-info"><strong>Edit Package</strong></div>
 	<form class="form-horizontal" method="post">
+	<?php 
+		$package_query = fetchData($con,"select * from package where package_id='$id'");
+		$package_row= $package_query->fetch_array();
+		?>
 
 			<div class="control-group">
 				<label class="control-label" for="inputEmail">Service</label>
@@ -12,7 +16,7 @@
 					<?php $query=fetchData($con,"select * from service");
 						while($row=$query->fetch_array()){
 					?>
-						<option value="<?php echo $row['service_id']; ?>"><?php echo $row['service_offer'] ?></option>
+						<option <?php echo $package_row['service_id'] == $row['service_id'] ? 'selected' : ''?> value="<?php echo $row['service_id']; ?>"><?php echo $row['service_offer'] ?></option>
 					<?php } ?>
 
 					</select>
@@ -23,20 +27,16 @@
 				<label class="control-label" for="inputEmail">Package Name</label>
 				<div class="controls">
 					<select name="package" required>
-						<option>Package A</option>
-						<option>Package B</option>
-						<option>Package C</option>
-						<option>Package D</option>
-						<option>Special Offer</option>
+						<option <?php echo $package_row['package_name'] == 'Package A' ? 'selected' : ''?>>Package A</option>
+						<option <?php echo $package_row['package_name'] == 'Package B' ? 'selected' : ''?>>Package B</option>
+						<option <?php echo $package_row['package_name'] == 'Package C' ? 'selected' : ''?>>Package C</option>
+						<option <?php echo $package_row['package_name'] == 'Package D' ? 'selected' : ''?>>Package D</option>
+						<option <?php echo $package_row['package_name'] == 'Special Offer' ? 'selected' : ''?>>Special Offer</option>
 					</select>
 				</div>
 			</div>
 
-				<?php 
-				$package_query = fetchData($con,"select * from package where package_id='$id'");
-				$package_row= $package_query->fetch_array();
-				?>
-
+				
 
 			<div class="control-group">
 			
@@ -48,7 +48,7 @@
 				
 				<input type="hidden" value="<?php echo $package_row['package_id']; ?>" name="id" id="inputEmail"  required>
 			
-			<input type="text" value="<?php echo $package_row['description']; ?>" name="description" id="inputEmail"  required>
+			<textarea name="description" id="inputEmail"  required><?php echo $package_row['description']; ?></textarea>
 			
 			</div>
 			</div>
@@ -85,11 +85,13 @@
 	$description=$_POST['description'];
 	$service_offer=$_POST['service'];
 	$price=$_POST['price'];
+	executeUpdate($con,"update package set service_id='$service_offer',package_name='$package',description='$description',price='$price' where package_id='$package_id'");
 	
+	?>
 	
-	mysql_query("update package set service_offer='$service_offer',package_name='$package',description='$description',price='$price' where package_id='$package_id'")or die(mysql_error()); ?>
 	<script>
-	window.location="package.php";
+		alert('You have successfully updated a package.');
+		window.location="package.php";
 	</script>
 	<?php
 	}

@@ -42,7 +42,7 @@
 			<div class="control-group">
 			<label class="control-label" for="inputEmail">Description</label>
 			<div class="controls">
-			<input type="text" name="description" id="inputEmail" placeholder="Description" required>
+			<textarea name="description" id="inputEmail" placeholder="Description" required></textarea>
 			</div>
 			</div>
 
@@ -78,7 +78,7 @@
 
 	
 	
-	mysql_query("insert into package (service_id,package_name,description,price) values('$service_id','$package','$description','$price')")or die(mysql_error());
+	executeUpdate($con,"insert into package (service_id,package_name,description,price) values('$service_id','$package','$description','$price')")or die(mysql_error());
 	?> 
 	<script>
 	window.location="package.php";
