@@ -1,6 +1,5 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
-<?php include('connect.php'); ?>
     <div class="container">
 
     <div class="row">   

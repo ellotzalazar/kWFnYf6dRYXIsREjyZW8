@@ -16,11 +16,6 @@
 	<div class="content">
 		
   
-<?php
-  require 'connect.php';
-?>
-
-
 <body>
   <div class="span6">
 

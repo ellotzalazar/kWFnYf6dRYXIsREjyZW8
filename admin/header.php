@@ -24,5 +24,5 @@
 	
 	
 </head>
-<?php include('dbcon.php'); ?>
+<?php @require_once('connect.php'); ?>
 <body>

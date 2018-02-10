@@ -1,7 +1,7 @@
 <?php
 // mysql_select_db('cedd',mysql_connect('localhost','root',''))or die(mysql_error());
 // mysql_select_db('scheduler',mysql_connect('localhost','root',''))or die(mysql_error());
-$conn = mysqli_connect('localhost','root','','scheduler');
+$conn = mysqli_connect('localhost','root','0412','scheduler');
 if (mysqli_connect_errno())
   {
   echo "Failed to connect to MySQL: " . mysqli_connect_error();
