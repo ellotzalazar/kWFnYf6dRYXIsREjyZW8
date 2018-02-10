@@ -26,6 +26,8 @@
 
 	$message=$_POST['message'];
 	
-	mysql_query("insert into note (message) values('$message')")or die(mysql_error());
+	executeUpdate($con,"insert into note (message) values('$message')");
+	echo '<script>window.location = "note.php"</script>';
+	
 	}
 	?>

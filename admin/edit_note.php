@@ -5,7 +5,7 @@
 			<div class="control-group">
 				<label class="control-label" for="inputPassword">Message</label>
 				<div class="controls">
-			<input type="text" name="note_id" value="<?php echo $row['note_id']; ?>">	
+			<input type="hidden" name="note_id" value="<?php echo $row['note_id']; ?>">	
 			<textarea name="message" rows="3"><?php echo $row['message']; ?></textarea>
 				</div>
 			</div>
@@ -29,7 +29,7 @@
 	$message=$_POST['message'];
 
 	
-	mysql_query("update note set message='$message' where note_id='$note_id'")or die(mysql_error()); ?>
+	executeUpdate($con,"update note set message='$message' where note_id='$note_id'"); ?>
 	<script>
 	window.location="note.php";
 	</script>
