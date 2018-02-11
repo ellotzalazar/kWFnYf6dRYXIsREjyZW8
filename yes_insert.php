@@ -18,17 +18,6 @@
 	require 'dbcon.php';
 	$id = doInsertFunction($conn,$query);
 	
-	$row = fetchData($conn,"SELECT sch.*,srv.service_offer,pck.package_name,pck.description 
-								FROM schedule sch
-									LEFT JOIN service srv
-										ON srv.service_id = sch.service_id
-									LEFT JOIN package pck
-										ON pck.package_id = sch.package_id
-								WHERE
-									sch.id = $id
-							");
-	
-	$data = $row->fetch_assoc();
 
 ?>
 <script>
