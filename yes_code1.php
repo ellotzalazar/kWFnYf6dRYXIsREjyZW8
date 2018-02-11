@@ -1,6 +1,13 @@
 <?php include('header.php'); ?>
 <?php include('session.php'); ?>
 <?php include('dbcon.php'); ?>
+<style>
+	@media print {
+		.navbar-inner, .span3, .footer{
+			display: none !important;
+		}
+	}
+</style>
     <div class="container">
 		<div>
 			<div class="row">
@@ -86,73 +93,76 @@
 				<div class="span6">
 					<br>
 
-		<!-- reservation -->
-		<?php if (isset($_POST['yes'])){ 
-		$session_id = $_POST['session_id'];
-		$date1 = $_POST['date1'];
-		$service1 = $_POST['service1'];
-		$package1 = $_POST['package1'];
-		$hours1 = $_POST['hours1'];
-		$venue1 = $_POST['venue1'];
-		$time1 = $_POST['time1'];
-		$location1 = $_POST['location1'];
-		$equal = $_POST['equal'];
-		
-			# code...
-		
-		$pack = fetchData($conn,"select * from package where package_id='$package1'");
-		$row= $pack->fetch_assoc();
-
-		$packprice=$row['price'];
-		$total=(($hours1-4)*250)+$packprice;
-		
-		?>
-		<script>
-			$(function(){
-				$.post('yes_insert.php',{
-											'session_id':'<?=$session_id;?>',
-											'date':'<?=$date1;?>',
-											'service':'<?=$service1;?>',
-											'package':'<?=$package1;?>',
-											'hours':'<?=$hours1;?>',
-											'location':'<?=$location1;?>',
-											'venue':'<?=$venue1;?>',
-											'time':'<?=$time1;?>',
-											'total':'<?=$total;?>',
-											'equal':'<?=$equal;?>',
-											'status':'Pending'
-										})
-					.done(function(result){
-						$('.details-container').html(result);
-						$('.sendCode').click(function(){
-							code = $('.code').val();
-							$.post('yes_code.php',{ 'code':code })
-								.done(function(returnData){
-									$('.details-container').html(returnData);
-								});
-						});
-					});
-			});
-		</script>
-		<div class="yes"><h3>Your appointment has been set on  <?php echo  $date1; ?>. Thank you for choosing us!</h3></div>
 		<?php
-			$sch = fetchData($conn,"SELECT * FROM schedule WHERE ")
+			// $sch = fetchData($conn,"SELECT * FROM schedule WHERE id = '".$_REQUEST['code']."';");
 		?>
-		<h4>Details:</h4>
 		<div class="details-container">
-		
+		<?php
+			if(isset($_REQUEST['vcode'])){
+				$row = fetchData($conn,"SELECT sch.* FROM schedule sch WHERE sch.code='".$_REQUEST['vcode']."' ;");
+				
+				$rowCount = $row->num_rows;
+				    //Display states list
+				if($rowCount > 0){
+					$data = $row->fetch_assoc();
+					fetchData($conn,"UPDATE schedule SET status='Pending' WHERE id='".$data['id']."' ;");
+				}
+			}
+			$row = fetchData($conn,"SELECT sch.*,srv.service_offer,pck.package_name,pck.description, pck.price 
+								FROM schedule sch
+									LEFT JOIN service srv
+										ON srv.service_id = sch.service_id
+									LEFT JOIN package pck
+										ON pck.package_id = sch.package_id
+								WHERE
+									sch.id = '".$_REQUEST['code']."'
+							");
+	
+			$data = $row->fetch_assoc();
+			if($data['status'] == 'Pending'){
+		?>
+			<div>Type of Service: <?php echo  $data['service_offer']; ?></div>
+			<div>Package Type: <?php echo  $data['package_name']; ?></div>
+			<div>Package Description: <?php echo  $data['description']; ?></div>
+			<div>Hours of service: <?php echo  $data['hours']; ?></div>
+			<div>Time of event: <?php echo  date('h:i a',strtotime($data['sched_time'])); ?></div>
+			<div>Venue of event: <?php echo  $data['venue']; ?></div>
+			<div>Location of event: <?php echo  $data['location']; ?></div>
+			<div>Total price: <?php echo  (($data['hours'] - 4) * 250) + $data['price']; ?></div>
+			<div>Security COde: <?php echo  $data['code']; ?></div>
+		<?php
+			} elseif ($data['status'] == 'Not Confirm'){
+		?>
+		<form action="">
+			<div>
+				Hello! <br/>
+				To continue your transaction please enter the code that we've sent to your mobile device. <br/>
+				Please Enter Code : 
+				<input type="hidden" name="code" value="<?= $_REQUEST['code'] ?>"/>
+				<input type="text" name="vcode" class="code"/> 
+				<input type="submit" value="Validate" class="sendCode"/>
+			</div>
+		</form>
+		<?php
+				if(isset($_REQUEST['vcode'])){
+			?>
+				<div class="alert alert-danger">
+					<strong>Invalid Code!</strong>&nbsp;
+					Please enter again.
+					<div>
+						No text received? click <a href="yes_sendSms.php?code=<?= $_REQUEST['code'] ?>">resend sms</a>
+					</div>
+				</div>
+			<?php
+				}
+		?>
+		<?php
+			}
+		?>
 		</div>
 		
 
-		<div>To see the full details of your schedule kindly refer to the My Schedule tab above. </div>
-		
 
-
-		<?php }else{ ?>
-		<script>
-		alert('error');
-		</script>
-		<?php } ?>
 		<br>
 		<br>
 	

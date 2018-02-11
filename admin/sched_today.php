@@ -57,6 +57,7 @@
 																		sch.status='Pending'
 																		
 																");
+									if($user_query) {
 									while($row= $user_query->fetch_array()){
 										$id=$row['id'];
 									?>
@@ -79,7 +80,7 @@
 									</td>
 									<?php include('toolttip_edit_delete.php'); ?>
 									</tr> 
-									<?php } ?>
+									<?php } } ?>
                            
                                 </tbody>
                             </table>

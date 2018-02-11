@@ -41,7 +41,7 @@
   
 
 <?php
-            include 'connect.php';
+            require_once 'connect.php';
 
             if (isset($_POST['logo'])) {
                   

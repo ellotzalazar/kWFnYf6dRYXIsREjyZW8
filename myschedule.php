@@ -100,6 +100,7 @@
                                         <th>Hours</th>
                                         <th>Location</th>                                 
                                         <th>Price</th>                                 
+                                        <th></th>                                 
                               
                                     </tr>
                                 </thead>
@@ -145,6 +146,9 @@
 	                                    <td><?php  echo $row['hours'];  ?></td> 
 	                                    <td><?php  echo $row['location'];  ?></td> 
 	                                    <td><?php  echo $row['total_price'];  ?></td> 
+	                                    <td>
+                                    		<a href="yes_code1.php?code=<?php  echo $row['id'];  ?>">Stub</a>
+                                    	</td> 
 									</tr>
 										<?php 
 										}
