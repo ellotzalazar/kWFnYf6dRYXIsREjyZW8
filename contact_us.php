@@ -23,7 +23,7 @@
 						<li><a rel="tooltip"  data-placement="bottom" title="Services" id="services" href="services.php" class=""><i class="icon-list icon-large"></i>&nbsp;Services</a></li>
 						<li><a rel="tooltip"  data-placement="bottom" title="About Us" id="aboutus" href="about.php" class=""><i class="icon-info icon-large"></i>&nbsp;About Us</a></li>
 						<li class="active"><a rel="tooltip"  data-placement="bottom" title="Contact Us" id="contactus" href="contact_us.php" class=""><i class="icon-phone icon-large"></i>&nbsp;Contact US</a></li>
-						<li><a rel="tooltip"  data-placement="bottom" title="Contact Us" id="contactus" href="Portfolio.php" class=""><i class="icon-film icon-large"></i>&nbsp;Portfolio</a></li>
+						<li><a rel="tooltip"  data-placement="bottom" title="Contact Us" id="contactus" href="portfolio.php" class=""><i class="icon-film icon-large"></i>&nbsp;Portfolio</a></li>
 						</ul>
 					 
 						</div>

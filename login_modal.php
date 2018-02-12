@@ -60,7 +60,8 @@ if (isset($_POST['submit1']))
 		
 		if( $num_row > 0 )
 		{		
-			$_SESSION['id']=$row['member_id']; ?>
+			$_SESSION['id']=$row['member_id'];
+			$_SESSION['status'] = $row['status']; ?>
 			<script>
 			window.location="homepage.php";
 			</script>
