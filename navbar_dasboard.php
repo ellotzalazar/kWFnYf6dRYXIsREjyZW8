@@ -12,7 +12,7 @@
 					$result=fetchData($conn,"select * from members where member_id='$session_id'");
 					$row= $result->fetch_assoc();
 					?>
-					<li><a href="dashboard.php" class=""><i class="icon-home icon-large"></i></a></li>			
+					<li><a href="hompage.php" class=""><i class="icon-home icon-large"></i></a></li>			
 					<li class="active" ><a href="dasboard.php" class="">Welcome:&nbsp;<i class="icon-user icon-large"></i>&nbsp;<?php echo $row['firstname']." ".$row['lastname']; ?></a></li>			
 					<li class="dropdown">
 <a class="dropdown-toggle" data-toggle="dropdown" href="#">

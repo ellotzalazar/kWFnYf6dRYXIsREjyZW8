@@ -5,7 +5,7 @@
 <div class="container">
 		<div>
 			<div class="row">
-				<div class="span"><a href="dasboard.php"><img src="img/dr.png"></a></div>
+				<div class="span"><a href="homepage.php"><img src="img/dr.png"></a></div>
 				<div class="span12">
 						<?php include('navbar_dasboard.php'); ?>
 				</div>

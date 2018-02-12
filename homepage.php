@@ -4,7 +4,7 @@
     <div class="container">
 		<div>
 			<div class="row">
-			<div class="span"><a href="dashboard.php"><img src="img/dr.png"></a></div>
+			<div class="span"><a href="homepage.php"><img src="img/dr.png"></a></div>
 				<div class="span12">
 				<?php include('navbar_dasboard.php'); ?></div>
 				<div class="span3">
@@ -120,7 +120,7 @@
 		if ($equal > 5){ ?>
 		<script>
 			alert('This date has been fully booked. Please try and book this event to a different date. Thank you!');
-			window.location="dasboard.php";
+			window.location="homepage.php";
 		</script>
 		<?php
 		}
@@ -139,7 +139,7 @@
 		<input type="hidden" name="time1" value="<?php echo $time; ?>" >
 		<input type="hidden" name="equal" value="<?php echo $equal; ?>" >
 		<p>Are you sure you want to set your event?</p>
-		<button name="yes" class="btn btn-success"><i class="icon-check icon-large"></i>&nbsp;Yes</button> &nbsp;  <a href="dasboard.php" class="btn"><i class="icon-remove"></i>&nbsp;No</a>
+		<button name="yes" class="btn btn-success"><i class="icon-check icon-large"></i>&nbsp;Yes</button> &nbsp;  <a href="homapage.php" class="btn"><i class="icon-remove"></i>&nbsp;No</a>
 		</form>
 	
 		</div>
