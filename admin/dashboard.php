@@ -10,7 +10,7 @@
 							<img src="../img/dr.png" class="img-rounded">
 								<?php include('navbar_dasboard.php') ?>
 							<div class="body_img">
-								<img src="../img/bg.JPG">
+								<img src="../img/bg.jpg">
 							</div>
 						</div>
     </div>
