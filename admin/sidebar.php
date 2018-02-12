@@ -60,7 +60,7 @@
 								</div>
 								<ul class="nav nav-tabs nav-stacked">
 									<li class="<?=$active == 'dashboard' ? 'active' : ''?>">
-										<a href="dasboard.php"><i class="icon-home icon-large"></i>&nbsp;Home<i class="icon-arrow-right icon-large"></i></a>
+										<a href="dashboard.php"><i class="icon-home icon-large"></i>&nbsp;Home<i class="icon-arrow-right icon-large"></i></a>
 									</li>
 									<li class="<?=$active == 'sched_today' ? 'active' : ''?>"><a href="sched_today.php"><i class="icon-file-alt icon-large"></i>&nbsp;         Schedule for Today <i class="icon-arrow-right icon-large"></i></a></li>
 									<li class="<?=$active == 'schedule' ? 'active' : ''?>"><a href="schedule.php"><i class="icon-list icon-large"></i>&nbsp;Schedule<i class="icon-arrow-right icon-large"></i></a></li>
