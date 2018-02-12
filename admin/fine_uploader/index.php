@@ -1,32 +1,11 @@
-<?php include('header.php'); ?>
-<?php include('session.php'); ?>
-    <div class="container">
 
-  <div class="row"> 
-            <div class="span3">
-            <?php include('sidebar.php'); ?>
-            </div>
-            <div class="span9">
-              <img src="../img/dr.png" class="img-rounded">
-                <?php include('navbar_dasboard.php') ?>
-              
-            
-            </div>
-
-  <div class="content">
-    
-  
-
-<body>
-<div class="span6">
-	<i>Supported formats : jpg,png,gif,jpeg,mp4;</i>
-	<link href="fine_uploader/fine-uploader-new.css" rel="stylesheet" type="text/css"/>
+	  <link href="fine-uploader-new.css" rel="stylesheet" type="text/css"/>
     <!-- The element where Fine Uploader will exist. -->
     <div id="fine-uploader">
     </div>
 
     <!-- Fine Uploader -->
-    <script src="fine_uploader/fine-uploader.min.js" type="text/javascript"></script>
+    <script src="fine-uploader.min.js" type="text/javascript"></script>
 
     <script type="text/template" id="qq-template">
         <div class="qq-uploader-selector qq-uploader" qq-drop-area-text="Drop files here">
@@ -85,16 +64,15 @@
     </script>
 
     <script>
-	var fname = '';
         var uploader = new qq.FineUploader({
             debug: true,
             element: document.getElementById('fine-uploader'),
             request: {
-                endpoint: 'fine_uploader/file_chunking/endpoint.php'
+                endpoint: 'php-traditional-server-master/endpoint.php'
             },
             deleteFile: {
                 enabled: true,
-                endpoint: 'fine_uploader/file_chunking/endpoint.php'
+                endpoint: 'php-traditional-server-master/endpoint.php'
             },
             retry: {
                enableAuto: true,
@@ -105,50 +83,20 @@
 	                enabled: true
 	            },
 	            success: {
-	                endpoint: 'fine_uploader/file_chunking/endpoint.php?done'
+	                endpoint: 'php-traditional-server-master/endpoint.php?done'
 	            }
 	        },
 	        callbacks:
 			{
 			    onSubmit: function(id, name) {
-			       fname = name;
+			        this.setUuid(id, "")
+			        alert(id+':'+name)
 			    },
 			     onAllComplete: function() {
-			    	savePortfolioFile(fname);	
+			    	alert('done'); 		
 			    }
 			}
         });
 
-	function savePortfolioFile(filename)
-	{
-		var ext = filename.split('.').pop();
-		var type = 'image';
-		if(ext == 'mp4')
-		{
-			type = 'video';
-		}
-		$.post('save_portfolio.php',{'type':type,'filename':filename})
-			.done(function(result){
-				alert('Success');
-				window.location = 'upload_portfolio.php';
-			});
-	}
+
     </script>
-
-</div>
-        
-</div>
-
-  </div>
-  <div class="cms_body">
- </div>
-
-</body>
-</html>
-
-
-
-  </div>
-
-    </div>
-<?php include('footer.php') ?>
