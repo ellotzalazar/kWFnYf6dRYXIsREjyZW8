@@ -25,7 +25,7 @@ Class SendMessage{
 	function sendMessageToNumber($message,$number){
 		$device = $this->getDevices($page);
 
-		$this->deviceID = $device['reponse']['result']['data']['id'];
+		$this->deviceID = $device['reponse']['result']['data'][0]['id'];
 
 
 		$result = $this->func->sendMessageToNumber($number, $message, $this->deviceID, $this->options);
