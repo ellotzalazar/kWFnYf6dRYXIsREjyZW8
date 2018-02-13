@@ -11,7 +11,7 @@ Class SendMessage{
 
 	function __construct(){
 		require_once 'smsGateway.php';
-		$this->func = new SmsGateway('ellotzero@gmail.com','pesosense2018');
+		$this->func = new SmsGateway('sterlingdigital2018@gmail.com','sterling2018');
 	}
 
 	function getAllDevice(){
@@ -23,6 +23,11 @@ Class SendMessage{
 	}
 
 	function sendMessageToNumber($message,$number){
+		$device = $this->getDevices($page);
+
+		$this->deviceID = $device['reponse']['result']['data']['id'];
+
+
 		$result = $this->func->sendMessageToNumber($number, $message, $this->deviceID, $this->options);
 		// print_r($result);
 	}
